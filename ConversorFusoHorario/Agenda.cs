@@ -16,7 +16,7 @@ namespace ConversorFusoHorario
             if(idFusoDestino != null)
             {
                 TimeZoneInfo fuso = TimeZoneInfo.FindSystemTimeZoneById(idFusoDestino);
-                DateTime dataFuso = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, fuso);
+                DateTime dataFuso = TimeZoneInfo.ConvertTimeFromUtc(DataHora.ToUniversalTime(), fuso);
                 Console.WriteLine(Titulo);
                 Console.WriteLine(dataFuso);
             }

@@ -29,7 +29,7 @@ class Program
 
                     else
                     {
-                        DateTime dataConvertida = agendaUsuario.dataUsuario();
+                        DateTime dataConvertida = agendaUsuario.dataUsuario(true);
                         agendaUsuario.exibirCompromissosEspecifico(dataConvertida, opcaoTimezone);
                     }
                     break;

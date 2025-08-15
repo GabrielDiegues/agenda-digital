@@ -49,7 +49,7 @@ namespace ConversorFusoHorario
 
                 if (compromisso.DataHora.Date == data.Date)
                 {
-                    Console.WriteLine(compromisso);
+                    compromisso.Imprimir(fuso);
                 }
             }
         }
@@ -62,15 +62,15 @@ namespace ConversorFusoHorario
         }
 
 
-        public DateTime dataUsuario()
+        public DateTime dataUsuario(bool notHorario = false)
         {
             DateTime dataConvertida;
             string dataUsuario = "";
             do
             {
-                Console.WriteLine("Digite uma data no formato: dd/mm/yyyy");
+                Console.WriteLine("Digite uma data e horário no formato: dd/MM/yyyy" + (notHorario ? "" : " HH:mm"));
                 dataUsuario = Console.ReadLine();
-            } while (DateTime.TryParseExact(dataUsuario, "dd/mm/yyyy",
+            } while (!DateTime.TryParseExact(dataUsuario, "dd/MM/yyyy" + (notHorario ? "" : " HH:mm"),
             System.Globalization.CultureInfo.InvariantCulture,
             System.Globalization.DateTimeStyles.None, out dataConvertida));
 
