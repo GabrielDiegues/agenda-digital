@@ -6,88 +6,43 @@ using System.Threading.Tasks;
 
 namespace ConversorFusoHorario
 {
-    public class Agenda
+    public class Agenda : IAgendaEntrada
     {
-        List<IAgendaEntrada> agenda;
+        public DateTime DataHora { get; set; }
+        public string Titulo { get; set; }
 
-        Dictionary<int, string> timezones;
-
-        // Funções
-        public int criarMenu(string opcoes, int totalOpcoes)
+        public void Imprimir(string? idFusoDestino = null)
         {
-            int inputUsuario = 0;
-            do
+            if(idFusoDestino != null)
             {
-                Console.WriteLine(opcoes);
-                try
-                {
-                    inputUsuario = int.Parse(Console.ReadLine());
-                }
-                catch
-                {
-                    Console.WriteLine("Por favor, insira um número válido");
-                }
-            }
-            while (!(inputUsuario >= 1 && inputUsuario <= totalOpcoes));
-            return inputUsuario;
-        }
-
-
-        public void exibirCompromissosHoje(int timeZone)
-        {
-            string? fuso = timezones.ContainsKey(timeZone) ? timezones[timeZone] : null;
-            foreach (IAgendaEntrada compromisso in agenda)
-            {
-                compromisso.Imprimir(fuso);
+                TimeZoneInfo fuso = TimeZoneInfo.FindSystemTimeZoneById(idFusoDestino);
+                DateTime dataFuso = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, fuso);
+                Console.WriteLine(Titulo);
+                Console.WriteLine(dataFuso);
             }
         }
 
-
-        public void exibirCompromissosEspecifico(DateTime data, int timeZone)
+        public void ImprimirHora(string? idFusoDestino = null)
         {
-            string? fuso = timezones.ContainsKey(timeZone) ? timezones[timeZone] : null;
-            foreach (IAgendaEntrada compromisso in agenda)
-            {
-
-                if (compromisso.DataHora.Date == data.Date)
-                {
-                    Console.WriteLine(compromisso);
-                }
-            }
+            throw new NotImplementedException();
         }
 
-
-        public int menuTimezone()
+        public void ImprimirDia(string? idFusoDestino = null)
         {
-            int inputUsuario = criarMenu("Escolha um timezone:\n1- Brasil\n2- Canadá", 2);
-            return inputUsuario;
+            throw new NotImplementedException();
         }
 
-
-        public DateTime dataUsuario()
+        public void ImprimirDiaSemana(string? idFusoDestino = null)
         {
-            DateTime dataConvertida;
-            string dataUsuario = "";
-            do
-            {
-                Console.WriteLine("Digite uma data no formato: dd/mm/yyyy");
-                dataUsuario = Console.ReadLine();
-            } while (DateTime.TryParseExact(dataUsuario, "dd/mm/yyyy",
-            System.Globalization.CultureInfo.InvariantCulture,
-            System.Globalization.DateTimeStyles.None, out dataConvertida));
-
-            return dataConvertida;
+            throw new NotImplementedException();
         }
 
 
         // Construtor
-        public Agenda()
+        public Agenda(DateTime data, string titulo)
         {
-            this.agenda = new List<IAgendaEntrada>();
-            this.timezones = new Dictionary<int, string>{
-                { 1, "BR" },
-                {2, "CA" }
-            };
+            DataHora = data;
+            Titulo = titulo;
         }
     }
 }
